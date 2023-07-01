@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 
-import { Grid } from '@mui/material';
+import { Grid,Button } from '@mui/material';
 
 import PopularCard from './PopularCard';
 import TotalGrowthBarChart from './TotalGrowthBarChart';
 import { gridSpacing } from 'store/constant';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
+
 
 // ==============================|| DEFAULT DASHBOARD ||============================== //
 
@@ -18,6 +20,9 @@ const Dashboard = () => {
     <Grid container spacing={gridSpacing}>
       <Grid item xs={12}>
         <Grid container spacing={gridSpacing}>
+          <Grid item xs={12} md={8}>
+            <Button variant="contained" startIcon={<CameraAltIcon/>}>Upload Image</Button>
+          </Grid>
           <Grid item xs={12} md={8}>
             <TotalGrowthBarChart isLoading={isLoading} />
           </Grid>
