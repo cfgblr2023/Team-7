@@ -117,6 +117,22 @@ def upload():
 
     return "Inserted successfully"
 
+@app.route('/getExcel', methods=['GET'])
+def getExcel():
+    footpath = db.footpath
+
+    cursor = footpath.find({})
+
+    csvStr = "Latitude, Longitude, Image, Label"+ "\n" 
+    for document in cursor:
+          print(document)
+          csvStr += document['lat'] + ", "+document['long'] + ", "+ document['image'] + ", "+ document['label'] + "\n" 
+    
+    return Response(
+        csvStr,
+        mimetype='text/csv',
+        headers={'Content-disposition': 'attachment; filename=data.csv'})
+
 @app.route('/verify', methods =['POST'])
 @cross_origin()
 def verify():
