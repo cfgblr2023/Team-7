@@ -169,20 +169,18 @@ const PopularCard = ({ isLoading }) => {
                     <ListItemIcon>
                       <IconLogout stroke={1.5} size="1.3rem" />
                     </ListItemIcon>
-                    <Grid item>
-                      <Grid container alignItems="center" justifyContent="space-between">
-                        <Grid item>
-                          <Typography variant="subtitle1" color="inherit">
-                            Professionals
-                          </Typography>
-                        </Grid>
-                        <Grid item>
-                          <Grid container alignItems="center" justifyContent="space-between">
-                            <Grid item>
-                              <Typography variant="subtitle1" color="inherit">
-                                189
-                              </Typography>
-                            </Grid>
+                    <Grid container alignItems="center" justifyContent="space-between">
+                      <Grid item>
+                        <Typography variant="subtitle1" color="inherit">
+                          Differently Abled
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <Grid container alignItems="center" justifyContent="space-between">
+                          <Grid item>
+                            <Typography variant="subtitle1" color="inherit">
+                              10
+                            </Typography>
                           </Grid>
                         </Grid>
                       </Grid>
@@ -193,20 +191,18 @@ const PopularCard = ({ isLoading }) => {
                     <ListItemIcon>
                       <IconLogout stroke={1.5} size="1.3rem" />
                     </ListItemIcon>
-                    <Grid item>
-                      <Grid container alignItems="center" justifyContent="space-between">
-                        <Grid item>
-                          <Typography variant="subtitle1" color="inherit">
-                            Differently Abled
-                          </Typography>
-                        </Grid>
-                        <Grid item>
-                          <Grid container alignItems="center" justifyContent="space-between">
-                            <Grid item>
-                              <Typography variant="subtitle1" color="inherit">
-                                16
-                              </Typography>
-                            </Grid>
+                    <Grid container alignItems="center" justifyContent="space-between">
+                      <Grid item>
+                        <Typography variant="subtitle1" color="inherit">
+                          Professionals
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <Grid container alignItems="center" justifyContent="space-between">
+                          <Grid item>
+                            <Typography variant="subtitle1" color="inherit">
+                              189
+                            </Typography>
                           </Grid>
                         </Grid>
                       </Grid>
