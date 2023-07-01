@@ -51,12 +51,11 @@ const FirebaseLogin = ({ ...others }) => {
 
   let userTypes = {
     1: 'Admin',
-    2: 'Professor',
-    3: 'Admin'
+    2: 'Volunteer',
   };
   let userType;
   const logInWithGoogle = async () => {
-    userType = userTypes['1'];
+    userType = userTypes[checked?"1":"2"];
     // setUserRoute(userType);
     
     await signInWithGoogle(userType);

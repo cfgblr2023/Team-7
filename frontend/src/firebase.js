@@ -1,11 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
-import {
-  getAuth,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut
-} from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 import { addDoc, collection, getDocs, getFirestore, query, where } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -28,7 +23,7 @@ export const signInWithGoogle = async (userType) => {
     const res = await signInWithPopup(auth, googleProvider);
     const user = res.user;
     if (res) {
-        console.log("herer")
+      console.log('herer');
       const q = query(collection(db, 'users'), where('uid', '==', user.uid));
       const docs = await getDocs(q);
       if (docs.docs.length === 0) {
@@ -42,10 +37,64 @@ export const signInWithGoogle = async (userType) => {
     window.location.reload();
   } catch (err) {
     console.error(err);
-    
+
     // alert(err.message);
   }
 };
+export const registerWithEmailAndPassword = async (email, password, userType) => {
+  try {
+    const res = await createUserWithEmailAndPassword(auth, email, password);
+    const user = res.user;
+    if (res) {
+      const q = query(collection(db, 'users'), where('uid', '==', user.uid));
+      const docs = await getDocs(q);
+      if (docs.docs.length === 0) {
+        await addDoc(collection(db, 'users'), {
+          uid: user.uid,
+          email: user.email,
+          userType: userType
+        });
+      }
+    }
+  } catch (err) {
+    console.error(err);
+    // alert(err.message);
+  }
+};
+
+export const logInWithEmailAndPassword = async (email, password) => {
+  try {
+    let res = await signInWithEmailAndPassword(auth, email, password);
+  } catch (err) {
+    // console.error(err);
+    throw err;
+  }
+};
+
+export const linkMailWithGoogle=async(email,password)=>{
+    try{
+    const credentials= EmailAuthProvider.credential(email, password);
+    const res=await linkWithCredential(auth.currentUser,credentials)
+    }
+    catch(err){
+      console.error(err);
+      // alert(err.message)
+    }
+  }
+
+export const fetchUserType=async(email)=>{
+    try{
+    const q = query(collection(db, "users"), where("email", "==", email));
+    const docs = await getDocs(q);
+    return docs.docs[0]._document.data.value.mapValue.fields.userType.stringValue
+    }
+    catch(err){
+      return ""
+      console.log(err)
+    }
+  }
+
+
 export const logout = () => {
   signOut(auth);
 };
