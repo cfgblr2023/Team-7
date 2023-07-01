@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import axios from 'axios';
 import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 import { addDoc, collection, getDocs, getFirestore, query, where } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -19,7 +19,7 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 
 const googleProvider = new GoogleAuthProvider();
-export const signInWithGoogle = async (userType) => {
+export const signInWithGoogle = async (userType,category) => {
   try {
     const res = await signInWithPopup(auth, googleProvider);
     const user = res.user;
@@ -31,18 +31,20 @@ export const signInWithGoogle = async (userType) => {
         await addDoc(collection(db, 'users'), {
           uid: user.uid,
           email: user.email,
-          userType: userType
+          userType: userType,
+          category:category
         });
-        if(userType=="Volunterr?"){
+        if(userType=="Volunteer"){
         axios.post('/register_user', {
           email: user.email,  
-          name: user.displayName
+          name: user.displayName,
+          category:category
         });
       }else {
-        axios.post('/register_user', {
+        axios.post('/register_admin', {
           email: user.email,
-          admin: userType=="Admin?"?true:false,
-          name: user.displayName
+          name: user.displayName,
+          category:category
         });
       }
       }
@@ -54,8 +56,9 @@ export const signInWithGoogle = async (userType) => {
     // alert(err.message);
   }
 };
-export const registerWithEmailAndPassword = async (email, password, userType) => {
+export const registerWithEmailAndPassword = async (email, password, userType,category) => {
   try {
+    
     const res = await createUserWithEmailAndPassword(auth, email, password);
     const user = res.user;
     if (res) {
@@ -67,13 +70,21 @@ export const registerWithEmailAndPassword = async (email, password, userType) =>
           email: user.email,
           admin: userType=="Admin"?true:false
         });
-
-        axios.post('https://sensing-locals.herokuapp.com/api/v1/create_user', {
+        if(userType=="Volunteer"){
+        axios.post('https://sensing-locals.herokuapp.com/api/v1/register_user', {
           email: email,
           password: password,
-          userType: fetchUserType(user.email),
-          name: user.displayName
+          name: user.displayName,
+          category:category
         });
+      }else {
+        axios.post('https://sensing-locals.herokuapp.com/api/v1/register_admin', {
+          email: email,
+          password: password,
+          name: user.displayName,
+          category:category
+        });
+      }
       }
     }
   } catch (err) {

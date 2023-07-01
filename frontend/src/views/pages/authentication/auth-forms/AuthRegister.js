@@ -35,7 +35,10 @@ import { strengthColor, strengthIndicator } from 'utils/password-strength';
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { registerWithEmailAndPassword } from 'firebase';
+import { registerWithEmailAndPassword, signInWithGoogle } from '../../../../firebase';
+import "./style.css";
+import ReactDropdown from 'react-dropdown';
+import { width } from '@mui/system';
 
 // ===========================|| FIREBASE - REGISTER ||=========================== //
 
@@ -48,16 +51,20 @@ const FirebaseRegister = ({ ...others }) => {
   const [checked, setChecked] = useState(false);
   const [username, setusername] = useState('');
   const [password, setpassword] = useState('');
-
+  const options = ['Students', 'Home-Makers', 'Senior-Citizens', 'Differentially Abled', 'Professionals', 'Others'];
+  const [category, setcategory] = useState(options[1]);
   const [strength, setStrength] = useState(0);
   const [level, setLevel] = useState();
 
+  const defaultCategory = options[1];
+
   const googleHandler = async () => {
-    signInWithGoogle();
+    
+    signInWithGoogle(checked ? 'Admin' : 'Volunteer',category);
     // console.error('Register');
   };
-   function handleSignUp(){
-      registerWithEmailAndPassword(username,password,checked?"Admin":"Volunteer");
+  function handleSignUp() {
+    registerWithEmailAndPassword(username, password, checked ? 'Admin' : 'Volunteer', category);
   }
 
   const handleClickShowPassword = () => {
@@ -67,6 +74,9 @@ const FirebaseRegister = ({ ...others }) => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+  function handleCategoryChange(e) {
+    setcategory(e.value);
+  }
 
   const changePassword = (value) => {
     const temp = strengthIndicator(value);
@@ -99,7 +109,7 @@ const FirebaseRegister = ({ ...others }) => {
               }}
             >
               <Box sx={{ mr: { xs: 1, sm: 2, width: 20 } }}>
-                <img src={Google}  alt="google" width={16} height={16} style={{ marginRight: matchDownSM ? 8 : 16 }} />
+                <img src={Google} alt="google" width={16} height={16} style={{ marginRight: matchDownSM ? 8 : 16 }} />
               </Box>
               Sign up with Google
             </Button>
@@ -207,6 +217,9 @@ const FirebaseRegister = ({ ...others }) => {
                 </FormHelperText>
               )}
             </FormControl>
+            <FormControl fullWidth error={Boolean(touched.email && errors.email)} sx={{ ...theme.typography.customInput }}>
+              <ReactDropdown onChange={handleCategoryChange} value={defaultCategory}  options={options} placeholder="Select an option" />
+            </FormControl>
 
             <FormControl fullWidth error={Boolean(touched.password && errors.password)} sx={{ ...theme.typography.customInput }}>
               <InputLabel htmlFor="outlined-adornment-password-register">Password</InputLabel>
@@ -286,7 +299,16 @@ const FirebaseRegister = ({ ...others }) => {
 
             <Box sx={{ mt: 2 }}>
               <AnimateButton>
-                <Button disableElevation onClick={handleSignUp} disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary">
+                <Button
+                  disableElevation
+                  onClick={handleSignUp}
+                  disabled={isSubmitting}
+                  fullWidth
+                  size="large"
+                  type="submit"
+                  variant="contained"
+                  color="secondary"
+                >
                   Sign up
                 </Button>
               </AnimateButton>
