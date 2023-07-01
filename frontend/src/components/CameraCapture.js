@@ -4,6 +4,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import * as tmImage from '@teachablemachine/image';
 import { useState } from 'react';
 import { auth } from '../firebase';
+import { Button } from '@mui/material';
 const CameraCapture = () => {
   let model, webcam, labelContainer, maxPredictions;
   const [LangLong, setLangLong] = useState(null);
@@ -29,7 +30,9 @@ const CameraCapture = () => {
     await webcam.play();
     window.requestAnimationFrame(loop);
 
+    // document.getElementById('webcam-container').removeChild(document.getElementById('webcam-cotainer').lastChild);
     document.getElementById('webcam-container').appendChild(webcam.canvas);
+    
     // labelContainer = document.getElementById('label-container');
     // for (let i = 0; i < maxPredictions; i++) {
     //   labelContainer.appendChild(document.createElement('div'));
@@ -80,7 +83,6 @@ const CameraCapture = () => {
       // labelContainer.childNodes[i].innerHTML = classPrediction;
     }
     try {
-      
       await axios.post(
         apiUrl,
         {
@@ -111,9 +113,9 @@ const CameraCapture = () => {
   return (
     <>
       <div>Teachable Machine Image Model</div>
-      <button type="button" onClick={capture}>
+      <Button type="button" onClick={capture}>
         Upload Photo
-      </button>
+      </Button>
       <div id="webcam-container"></div>
       <div id="label-container"></div>
     </>

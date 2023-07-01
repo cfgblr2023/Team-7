@@ -1,4 +1,5 @@
 // Import the functions you need from the SDKs you need
+import axios from 'axios';
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 import { addDoc, collection, getDocs, getFirestore, query, where } from 'firebase/firestore';
@@ -23,7 +24,7 @@ export const signInWithGoogle = async (userType) => {
     const res = await signInWithPopup(auth, googleProvider);
     const user = res.user;
     if (res) {
-      console.log('herer');
+      // console.log('herer');
       const q = query(collection(db, 'users'), where('uid', '==', user.uid));
       const docs = await getDocs(q);
       if (docs.docs.length === 0) {
@@ -32,9 +33,21 @@ export const signInWithGoogle = async (userType) => {
           email: user.email,
           userType: userType
         });
+        if(userType=="Volunterr?"){
+        axios.post('/register_user', {
+          email: user.email,  
+          name: user.displayName
+        });
+      }else {
+        axios.post('/register_user', {
+          email: user.email,
+          admin: userType=="Admin?"?true:false,
+          name: user.displayName
+        });
+      }
       }
     }
-    window.location.reload();
+    // window.location.reload();
   } catch (err) {
     console.error(err);
 
@@ -52,7 +65,14 @@ export const registerWithEmailAndPassword = async (email, password, userType) =>
         await addDoc(collection(db, 'users'), {
           uid: user.uid,
           email: user.email,
-          userType: userType
+          admin: userType=="Admin"?true:false
+        });
+
+        axios.post('https://sensing-locals.herokuapp.com/api/v1/create_user', {
+          email: email,
+          password: password,
+          userType: fetchUserType(user.email),
+          name: user.displayName
         });
       }
     }
@@ -71,29 +91,25 @@ export const logInWithEmailAndPassword = async (email, password) => {
   }
 };
 
-export const linkMailWithGoogle=async(email,password)=>{
-    try{
-    const credentials= EmailAuthProvider.credential(email, password);
-    const res=await linkWithCredential(auth.currentUser,credentials)
-    }
-    catch(err){
-      console.error(err);
-      // alert(err.message)
-    }
+export const linkMailWithGoogle = async (email, password) => {
+  try {
+    const credentials = EmailAuthProvider.credential(email, password);
+    const res = await linkWithCredential(auth.currentUser, credentials);
+  } catch (err) {
+    console.error(err);
+    // alert(err.message)
   }
+};
 
-export const fetchUserType=async(email)=>{
-    try{
-    const q = query(collection(db, "users"), where("email", "==", email));
+export const fetchUserType = async (email) => {
+  try {
+    const q = query(collection(db, 'users'), where('email', '==', email));
     const docs = await getDocs(q);
-    return docs.docs[0]._document.data.value.mapValue.fields.userType.stringValue
-    }
-    catch(err){
-      return ""
-      console.log(err)
-    }
+    return docs.docs[0]._document.data.value.mapValue.fields.userType.stringValue;
+  } catch (err) {
+    console.log(err);
   }
-
+};
 
 export const logout = () => {
   signOut(auth);
