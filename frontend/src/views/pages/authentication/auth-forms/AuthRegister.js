@@ -35,6 +35,7 @@ import { strengthColor, strengthIndicator } from 'utils/password-strength';
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { registerWithEmailAndPassword } from 'firebase';
 
 // ===========================|| FIREBASE - REGISTER ||=========================== //
 
@@ -44,14 +45,20 @@ const FirebaseRegister = ({ ...others }) => {
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
   const customization = useSelector((state) => state.customization);
   const [showPassword, setShowPassword] = useState(false);
-  const [checked, setChecked] = useState(true);
+  const [checked, setChecked] = useState(false);
+  const [username, setusername] = useState('');
+  const [password, setpassword] = useState('');
 
   const [strength, setStrength] = useState(0);
   const [level, setLevel] = useState();
 
   const googleHandler = async () => {
-    console.error('Register');
+    signInWithGoogle();
+    // console.error('Register');
   };
+   function handleSignUp(){
+      registerWithEmailAndPassword(username,password,checked?"Admin":"Volunteer");
+  }
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -65,6 +72,10 @@ const FirebaseRegister = ({ ...others }) => {
     const temp = strengthIndicator(value);
     setStrength(temp);
     setLevel(strengthColor(temp));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
   };
 
   useEffect(() => {
@@ -88,7 +99,7 @@ const FirebaseRegister = ({ ...others }) => {
               }}
             >
               <Box sx={{ mr: { xs: 1, sm: 2, width: 20 } }}>
-                <img src={Google} alt="google" width={16} height={16} style={{ marginRight: matchDownSM ? 8 : 16 }} />
+                <img src={Google}  alt="google" width={16} height={16} style={{ marginRight: matchDownSM ? 8 : 16 }} />
               </Box>
               Sign up with Google
             </Button>
@@ -184,7 +195,10 @@ const FirebaseRegister = ({ ...others }) => {
                 value={values.email}
                 name="email"
                 onBlur={handleBlur}
-                onChange={handleChange}
+                onChange={(e) => {
+                  setusername(e.target.value);
+                  handleChange(e);
+                }}
                 inputProps={{}}
               />
               {touched.email && errors.email && (
@@ -205,6 +219,7 @@ const FirebaseRegister = ({ ...others }) => {
                 onBlur={handleBlur}
                 onChange={(e) => {
                   handleChange(e);
+                  setpassword(e.target.value);
                   changePassword(e.target.value);
                 }}
                 endAdornment={
@@ -271,7 +286,7 @@ const FirebaseRegister = ({ ...others }) => {
 
             <Box sx={{ mt: 2 }}>
               <AnimateButton>
-                <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary">
+                <Button disableElevation onClick={handleSignUp} disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary">
                   Sign up
                 </Button>
               </AnimateButton>
