@@ -34,20 +34,34 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 import Google from 'assets/images/icons/social-google.svg';
+import { signInWithGoogle } from '../../../../firebase';
+
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 
 const FirebaseLogin = ({ ...others }) => {
+  
   const theme = useTheme();
   const scriptedRef = useScriptRef();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
   const customization = useSelector((state) => state.customization);
   const [checked, setChecked] = useState(true);
+  const [usertype, setusertype] = useState('');
+  use
 
-  const googleHandler = async () => {
-    console.error('Login');
+  let userTypes = {
+    1: 'Admin',
+    2: 'Professor',
+    3: 'Admin'
   };
+  let userType;
+  const logInWithGoogle = async () => {
+    userType = userTypes['1'];
+    // setUserRoute(userType);
+    
+    await signInWithGoogle(userType);
 
+  };
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -65,7 +79,7 @@ const FirebaseLogin = ({ ...others }) => {
             <Button
               disableElevation
               fullWidth
-              onClick={googleHandler}
+              onClick={logInWithGoogle}
               size="large"
               variant="outlined"
               sx={{
