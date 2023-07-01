@@ -68,9 +68,11 @@ const CameraCapture = () => {
   async function predict() {
     let tblob = null;
     const prediction = await model.predict(webcam.canvas);
-    webcam.canvas.toBlob(function (blob) {
-      tblob = blob;
-    }, 'image/png');
+   tblob = webcam.canvas.toDataURL('image/png');
+    
+    // webcam.canvas.toBlob(function (blob) {
+    //   tblob = blob;
+    // }, 'image/png')
     const apiUrl = 'ec2-54-254-193-13.ap-southeast-1.compute.amazonaws.com:5000/upload_image'; // Replace with the API endpoint URL on your server
 
     let maxP = 0,
@@ -96,11 +98,11 @@ const CameraCapture = () => {
             probability: maxP
           }
         },
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        }
+        // {
+        //   // headers: {
+        //   //   'Content-Type': 'multipart/form-data'
+        //   // }
+        // }
       );
 
       console.log('Image sent successfully');
