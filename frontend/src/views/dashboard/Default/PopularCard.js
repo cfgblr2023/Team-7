@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Avatar, Button, CardActions, CardContent, Divider, Grid, Menu, MenuItem, Typography } from '@mui/material';
+import {CardContent, Divider, Grid, Menu, MenuItem, Typography } from '@mui/material';
 
 // project imports
 import BajajAreaChartCard from './BajajAreaChartCard';
@@ -12,11 +12,7 @@ import SkeletonPopularCard from 'ui-component/cards/Skeleton/PopularCard';
 import { gridSpacing } from 'store/constant';
 
 // assets
-import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 import MoreHorizOutlinedIcon from '@mui/icons-material/MoreHorizOutlined';
-import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
-import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
-
 // ==============================|| DASHBOARD DEFAULT - POPULAR CARD ||============================== //
 
 const PopularCard = ({ isLoading }) => {
@@ -43,7 +39,7 @@ const PopularCard = ({ isLoading }) => {
               <Grid item xs={12}>
                 <Grid container alignContent="center" justifyContent="space-between">
                   <Grid item>
-                    <Typography variant="h4">Popular Stocks</Typography>
+                    <Typography variant="h4">Registered Users</Typography>
                   </Grid>
                   <Grid item>
                     <MoreHorizOutlinedIcon
@@ -72,9 +68,9 @@ const PopularCard = ({ isLoading }) => {
                         horizontal: 'right'
                       }}
                     >
-                      <MenuItem onClick={handleClose}> Today</MenuItem>
-                      <MenuItem onClick={handleClose}> This Month</MenuItem>
-                      <MenuItem onClick={handleClose}> This Year </MenuItem>
+                      <MenuItem onClick={handleClose}> This Year</MenuItem>
+                      <MenuItem onClick={handleClose}> 2022</MenuItem>
+                      <MenuItem onClick={handleClose}> 2021 </MenuItem>
                     </Menu>
                   </Grid>
                 </Grid>
@@ -88,39 +84,21 @@ const PopularCard = ({ isLoading }) => {
                     <Grid container alignItems="center" justifyContent="space-between">
                       <Grid item>
                         <Typography variant="subtitle1" color="inherit">
-                          Bajaj Finery
+                          Students
                         </Typography>
                       </Grid>
                       <Grid item>
                         <Grid container alignItems="center" justifyContent="space-between">
                           <Grid item>
                             <Typography variant="subtitle1" color="inherit">
-                              $1839.00
+                              139
                             </Typography>
-                          </Grid>
-                          <Grid item>
-                            <Avatar
-                              variant="rounded"
-                              sx={{
-                                width: 16,
-                                height: 16,
-                                borderRadius: '5px',
-                                backgroundColor: theme.palette.success.light,
-                                color: theme.palette.success.dark,
-                                ml: 2
-                              }}
-                            >
-                              <KeyboardArrowUpOutlinedIcon fontSize="small" color="inherit" />
-                            </Avatar>
                           </Grid>
                         </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
                   <Grid item>
-                    <Typography variant="subtitle2" sx={{ color: 'success.dark' }}>
-                      10% Profit
-                    </Typography>
                   </Grid>
                 </Grid>
                 <Divider sx={{ my: 1.5 }} />
@@ -129,39 +107,19 @@ const PopularCard = ({ isLoading }) => {
                     <Grid container alignItems="center" justifyContent="space-between">
                       <Grid item>
                         <Typography variant="subtitle1" color="inherit">
-                          TTML
+                          Senior Citizens
                         </Typography>
                       </Grid>
                       <Grid item>
                         <Grid container alignItems="center" justifyContent="space-between">
                           <Grid item>
                             <Typography variant="subtitle1" color="inherit">
-                              $100.00
+                              100
                             </Typography>
-                          </Grid>
-                          <Grid item>
-                            <Avatar
-                              variant="rounded"
-                              sx={{
-                                width: 16,
-                                height: 16,
-                                borderRadius: '5px',
-                                backgroundColor: theme.palette.orange.light,
-                                color: theme.palette.orange.dark,
-                                marginLeft: 1.875
-                              }}
-                            >
-                              <KeyboardArrowDownOutlinedIcon fontSize="small" color="inherit" />
-                            </Avatar>
                           </Grid>
                         </Grid>
                       </Grid>
                     </Grid>
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="subtitle2" sx={{ color: theme.palette.orange.dark }}>
-                      10% loss
-                    </Typography>
                   </Grid>
                 </Grid>
                 <Divider sx={{ my: 1.5 }} />
@@ -170,39 +128,19 @@ const PopularCard = ({ isLoading }) => {
                     <Grid container alignItems="center" justifyContent="space-between">
                       <Grid item>
                         <Typography variant="subtitle1" color="inherit">
-                          Reliance
+                          Home Makers
                         </Typography>
                       </Grid>
                       <Grid item>
                         <Grid container alignItems="center" justifyContent="space-between">
                           <Grid item>
                             <Typography variant="subtitle1" color="inherit">
-                              $200.00
+                              200
                             </Typography>
-                          </Grid>
-                          <Grid item>
-                            <Avatar
-                              variant="rounded"
-                              sx={{
-                                width: 16,
-                                height: 16,
-                                borderRadius: '5px',
-                                backgroundColor: theme.palette.success.light,
-                                color: theme.palette.success.dark,
-                                ml: 2
-                              }}
-                            >
-                              <KeyboardArrowUpOutlinedIcon fontSize="small" color="inherit" />
-                            </Avatar>
                           </Grid>
                         </Grid>
                       </Grid>
                     </Grid>
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="subtitle2" sx={{ color: theme.palette.success.dark }}>
-                      10% Profit
-                    </Typography>
                   </Grid>
                 </Grid>
                 <Divider sx={{ my: 1.5 }} />
@@ -211,39 +149,19 @@ const PopularCard = ({ isLoading }) => {
                     <Grid container alignItems="center" justifyContent="space-between">
                       <Grid item>
                         <Typography variant="subtitle1" color="inherit">
-                          TTML
+                          Professionals
                         </Typography>
                       </Grid>
                       <Grid item>
                         <Grid container alignItems="center" justifyContent="space-between">
                           <Grid item>
                             <Typography variant="subtitle1" color="inherit">
-                              $189.00
+                              189
                             </Typography>
-                          </Grid>
-                          <Grid item>
-                            <Avatar
-                              variant="rounded"
-                              sx={{
-                                width: 16,
-                                height: 16,
-                                borderRadius: '5px',
-                                backgroundColor: theme.palette.orange.light,
-                                color: theme.palette.orange.dark,
-                                ml: 2
-                              }}
-                            >
-                              <KeyboardArrowDownOutlinedIcon fontSize="small" color="inherit" />
-                            </Avatar>
                           </Grid>
                         </Grid>
                       </Grid>
                     </Grid>
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="subtitle2" sx={{ color: theme.palette.orange.dark }}>
-                      10% loss
-                    </Typography>
                   </Grid>
                 </Grid>
                 <Divider sx={{ my: 1.5 }} />
@@ -252,50 +170,24 @@ const PopularCard = ({ isLoading }) => {
                     <Grid container alignItems="center" justifyContent="space-between">
                       <Grid item>
                         <Typography variant="subtitle1" color="inherit">
-                          Stolon
+                          Differently Abled
                         </Typography>
                       </Grid>
                       <Grid item>
                         <Grid container alignItems="center" justifyContent="space-between">
                           <Grid item>
                             <Typography variant="subtitle1" color="inherit">
-                              $189.00
+                              16
                             </Typography>
-                          </Grid>
-                          <Grid item>
-                            <Avatar
-                              variant="rounded"
-                              sx={{
-                                width: 16,
-                                height: 16,
-                                borderRadius: '5px',
-                                backgroundColor: theme.palette.orange.light,
-                                color: theme.palette.orange.dark,
-                                ml: 2
-                              }}
-                            >
-                              <KeyboardArrowDownOutlinedIcon fontSize="small" color="inherit" />
-                            </Avatar>
                           </Grid>
                         </Grid>
                       </Grid>
                     </Grid>
-                  </Grid>
-                  <Grid item>
-                    <Typography variant="subtitle2" sx={{ color: theme.palette.orange.dark }}>
-                      10% loss
-                    </Typography>
                   </Grid>
                 </Grid>
               </Grid>
             </Grid>
           </CardContent>
-          <CardActions sx={{ p: 1.25, pt: 0, justifyContent: 'center' }}>
-            <Button size="small" disableElevation>
-              View All
-              <ChevronRightOutlinedIcon />
-            </Button>
-          </CardActions>
         </MainCard>
       )}
     </>
