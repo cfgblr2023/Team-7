@@ -1,0 +1,2 @@
+https://teachablemachine.withgoogle.com/models/t9FHNt1hv/
+teachablemachine model 1 with 52.3% accuracy and all labels
