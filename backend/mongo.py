@@ -98,26 +98,38 @@ def login():
 @app.route('/upload_image', methods=['POST'])
 @cross_origin()
 def upload():
+    treshold = 80
     footpath = db.footpath
     lat = request.get_json()['lat']
     long = request.get_json()['long']
-    approved = request.get_json()['approved']
+    approved = False
     label = request.get_json()['label']
     image_data = request.files['image'] #BLOB
     probability = request.get_json()['probability']
     createdAt = datetime.utcnow()
 
-    footpath.insert_one({
-        'lat': lat,
-        'long': long,
-        'image': image_data,
-        'label': label,
-        'approved':approved,
-        'probablity': probability,
-        'createdAt':createdAt
-    }).inserted_id
-
-    return "Inserted successfully"
+    if(probability > treshold):
+        footpath.insert_one({
+            'lat': lat,
+            'long': long,
+            'image': image_data,
+            'label': label,
+            'approved':True,
+            'probablity': probability,
+            'createdAt':createdAt
+        }).inserted_id
+        return "Inserted successfully"
+    else:
+        footpath.insert_one({
+            'lat': lat,
+            'long': long,
+            'image': image_data,
+            'label': label,
+            'approved':approved,
+            'probablity': probability,
+            'createdAt':createdAt
+        }).inserted_id
+        return "Inserted successfully and the label needs to be approved"
 
 @app.route('/verify', methods =['POST'])
 @cross_origin()
