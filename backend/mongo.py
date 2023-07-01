@@ -78,6 +78,7 @@ def register_admin():
     return jsonify({'result': result})
 
 @app.route('/login', methods=['POST'])
+@cross_origin()
 def login():
     users = db.users
     username = request.get_json()['username']
@@ -95,6 +96,7 @@ def login():
     return result
 
 @app.route('/upload_image', methods=['POST'])
+@cross_origin()
 def upload():
     footpath = db.footpath
     lat = request.get_json()['lat']
@@ -118,6 +120,7 @@ def upload():
     return "Inserted successfully"
 
 @app.route('/getExcel', methods=['GET'])
+@cross_origin()
 def getExcel():
     footpath = db.footpath
 
@@ -155,6 +158,7 @@ def verify():
     return jsonify(res)
 
 @app.route('/getExcel', methods=['GET'])
+@cross_origin()
 def getExcel():
     footpath = db.footpath
 
