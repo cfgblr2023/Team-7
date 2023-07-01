@@ -9,6 +9,7 @@ import PopularCard from './PopularCard';
 import TotalGrowthBarChart from './TotalGrowthBarChart';
 import { gridSpacing } from 'store/constant';
 import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import CameraCapture from 'components/CameraCapture';
 
 
 const style = {
@@ -45,7 +46,7 @@ const Dashboard = () => {
             </Button>
             <Modal open={open} onClose={handleClose} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
               <Box sx={style}>
-                
+                <CameraCapture/>
               </Box>
             </Modal>
           </Grid>
