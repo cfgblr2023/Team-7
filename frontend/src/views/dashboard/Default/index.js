@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { Grid, Button } from '@mui/material';
-import Typography from '@mui/material/Typography';
+// import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 
