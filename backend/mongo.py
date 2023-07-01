@@ -6,6 +6,7 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 import os
 from flask_cors import cross_origin
+from datetime import datetime
 
 
 load_dotenv()
@@ -77,6 +78,7 @@ def register_admin():
     return jsonify({'result': result})
 
 @app.route('/login', methods=['POST'])
+@cross_origin()
 def login():
     users = db.users
     username = request.get_json()['username']
@@ -93,16 +95,17 @@ def login():
         result = jsonify({"result": "No results found"})
     return result
 
-@app.route('/upload', methods=['POST'])
+@app.route('/upload_image', methods=['POST'])
+@cross_origin()
 def upload():
     footpath = db.footpath
     lat = request.get_json()['lat']
     long = request.get_json()['long']
-    # file = request.files['image']
     approved = request.get_json()['approved']
     label = request.get_json()['label']
-    image_data = request.get_json()['image']
+    image_data = request.files['image'] #BLOB
     probability = request.get_json()['probability']
+    createdAt = datetime.utcnow()
 
     footpath.insert_one({
         'lat': lat,
@@ -110,26 +113,11 @@ def upload():
         'image': image_data,
         'label': label,
         'approved':approved,
-        'probablity': probability
+        'probablity': probability,
+        'createdAt':createdAt
     }).inserted_id
 
     return "Inserted successfully"
-
-@app.route('/getExcel', methods=['GET'])
-def getExcel():
-    footpath = db.footpath
-
-    cursor = footpath.find({})
-
-    csvStr = "Latitude, Longitude, Image, Label"+ "\n" 
-    for document in cursor:
-          print(document)
-          csvStr += document['lat'] + ", "+document['long'] + ", "+ document['image'] + ", "+ document['label'] + "\n" 
-    
-    return Response(
-        csvStr,
-        mimetype='text/csv',
-        headers={'Content-disposition': 'attachment; filename=data.csv'})
 
 @app.route('/verify', methods =['POST'])
 @cross_origin()
@@ -150,6 +138,46 @@ def verify():
         res.append(req)
         print(req)
         
+    return jsonify(res)
+
+@app.route('/getExcel', methods=['GET'])
+@cross_origin()
+def getExcel():
+    footpath = db.footpath
+
+    cursor = footpath.find({'approved':True})
+
+    csvStr = "Latitude, Longitude, Image, Label"+ "\n" 
+    for document in cursor:
+          #print(document)
+          csvStr += document['lat'] + ", "+document['long'] + ", "+ document['image'] + ", "+ document['label'] + "\n" 
+    
+    return Response(
+        csvStr,
+        mimetype='text/csv',
+        headers={'Content-disposition': 'attachment; filename=data.csv'})
+
+@app.route('/update', methods =['POST'])
+@cross_origin()
+def update():
+    footpath = db.footpath
+    new_label = request.get_json()['new_label']
+    id = request.get_json()['id']
+    sid = ObjectId(id)
+    footpath.update_one({'_id':sid},{'$set':{'label':new_label,'approved':True}})
+    res = "Updated image data"
+    
+    return jsonify(res)
+
+@app.route('/approve', methods =['POST'])
+@cross_origin()
+def approve():
+    footpath = db.footpath
+    id = request.get_json()['id']
+    sid = ObjectId(id)
+    footpath.update_one({'_id':sid},{'$set':{'approved':True}})
+    res = "Updated image to approved data"
+    
     return jsonify(res)
 
 if __name__ == '__main__':
