@@ -100,12 +100,9 @@ export default function Landing() {
               loading="lazy"
             />
           </ImageListItem>
-
-          
-
       
       </ImageList>
-      <Stack spacing={2} direction="row">
+      <Stack spacing={2} direction="row" sx={{m:3}}>
       <Button variant="contained">Login</Button>
       <Button variant="contained">Register</Button>
     </Stack>
