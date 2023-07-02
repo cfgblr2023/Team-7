@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 // material-ui
@@ -59,12 +59,16 @@ const FirebaseRegister = ({ ...others }) => {
   const defaultCategory = options[1];
 
   const googleHandler = async () => {
+    const navigate = useNavigate()
     
     signInWithGoogle(checked ? 'Admin' : 'Volunteer',category);
     // console.error('Register');
   };
   function handleSignUp() {
     registerWithEmailAndPassword(username, password, checked ? 'Admin' : 'Volunteer', category);
+    if(checked){
+      navigate("/free/admin")
+    }else navigate("/free/dashboard")
   }
 
   const handleClickShowPassword = () => {
