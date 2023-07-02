@@ -12,7 +12,9 @@ import carousel7 from 'assets/images/carousel/JPEG_20230326_133008_8977776685096
 import carousel8 from 'assets/images/carousel/JPEG_20230326_133241_3200766287346809448.jpg';
 import carousel9 from 'assets/images/carousel/JPEG_20230326_133720_8238953998702825054.jpg';
 import carousel10 from 'assets/images/carousel/JPEG_20230326_133829_8848801794550363302.jpg';
-
+import Footer from 'components/Footer';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 export default function Landing() {
   return (
     <Box sx={{ width: 350, height: 500}}>
@@ -103,6 +105,11 @@ export default function Landing() {
 
       
       </ImageList>
+      <Stack spacing={2} direction="row">
+      <Button variant="contained">Login</Button>
+      <Button variant="contained">Register</Button>
+    </Stack>
+      <Footer/>
     </Box>
   );
 }

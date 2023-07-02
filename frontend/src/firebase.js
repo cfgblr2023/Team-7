@@ -1,8 +1,8 @@
 // Import the functions you need from the SDKs you need
 import axios from 'axios';
-import { initializeApp } from 'firebase/app';
-import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
-import { addDoc, collection, getDocs, getFirestore, query, where } from 'firebase/firestore';
+import { initializeApp } from '@firebase/app';
+import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, signInWithPopup, signOut } from '@firebase/auth';
+import { addDoc, collection, getDocs, getFirestore, query, where } from '@firebase/firestore';
 
 const firebaseConfig = {
   apiKey: '',
