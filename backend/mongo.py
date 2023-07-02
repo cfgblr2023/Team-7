@@ -131,7 +131,7 @@ def upload():
         }).inserted_id
         return "Inserted successfully and the label needs to be approved"
 
-@app.route('/verify', methods =['POST'])
+@app.route('/verify', methods =['GET'])
 @cross_origin()
 def verify():
     footpath = db.footpath
@@ -139,8 +139,9 @@ def verify():
     # print(to_be_ver)
     res = []
     for i in to_be_ver:
-        print(i)
+        id = str(i.get("_id"))
         req = {
+            'id': id,
             'image':i.get('image'),
             'label':i.get('label'),
             'lat':i.get('lat'),
@@ -148,7 +149,6 @@ def verify():
         }
         # req_json=json.dumps(req)
         res.append(req)
-        print(req)
         
     return jsonify(res)
 

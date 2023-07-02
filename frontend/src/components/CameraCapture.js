@@ -10,11 +10,20 @@ const CameraCapture = () => {
   const [LangLong, setLangLong] = useState(null);
 
   const [user, loading, error] = useAuthState(auth);
+  
   useEffect(() => {
     // capture();
     setLocation();
+    webcam = new tmImage.Webcam(200, 200, true);
+    // await webcam.setup();
+    setUpWebCam();
   }, []);
 
+  async function setUpWebCam(){
+    await webcam.setup();
+    await webcam.play();
+  
+  }
   async function capture() {
     const URL = 'https://teachablemachine.withgoogle.com/models/Ccm-Dcw6_/';
     const modelURL = URL + 'model.json';
@@ -115,7 +124,7 @@ const CameraCapture = () => {
   return (
     <>
       <div>Teachable Machine Image Model</div>
-      <Button type="button" onClick={capture}>
+      <Button type="button" onClick={capture} >
         Upload Photo
       </Button>
       <div id="webcam-container"></div>

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import axios from 'axios';
 
 // material-ui
 import { useTheme, styled } from '@mui/material/styles';
@@ -64,9 +65,16 @@ const TotalOrderLineChartCard = ({ isLoading,item,i }) => {
   const theme = useTheme();
 
   const [timeValue, setTimeValue] = useState(false);
+  const [isDone, setDone] = useState(false)
   const handleChangeTime = (event, newValue) => {
+    axios.post("http://localhost:5000/approve", {"id": item.id} ).then(
+    setDone(true)).catch((e)=>alert(e))
     setTimeValue(newValue);
   };
+
+  if(isDone) {
+    return <></>
+  }
 
   return (
     <>
@@ -80,7 +88,7 @@ const TotalOrderLineChartCard = ({ isLoading,item,i }) => {
                 <Grid container justifyContent="space-between">
                   <Grid item>
                     <Avatar
-                    src={issue1}
+                    src={item.image}
                       variant="rounded"
                       sx={{
                         ...theme.typography.commonAvatar,
@@ -135,7 +143,7 @@ const TotalOrderLineChartCard = ({ isLoading,item,i }) => {
                             color: theme.palette.primary[200]
                           }}
                         >
-                          {item.type}
+                          {item.label}
                         </Typography>
                       </Grid>
                     </Grid>
