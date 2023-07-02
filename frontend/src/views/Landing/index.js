@@ -1,109 +1,157 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
-import carousel1 from 'assets/images/carousel/20230323_171701.jpg';
-import carousel2 from 'assets/images/carousel/20230326_082038.jpg';
-import carousel3 from 'assets/images/carousel/JPEG_20230326_095437_8125080500982386498.jpg';
-import carousel4 from 'assets/images/carousel/JPEG_20230326_101109_5097561306606584259.jpg';
-import carousel5 from 'assets/images/carousel/JPEG_20230326_131156_5934062720191431023.jpg';
-import carousel6 from 'assets/images/carousel/JPEG_20230326_132009_7402386068224784980.jpg';
-import carousel7 from 'assets/images/carousel/JPEG_20230326_133008_8977776685096644627.jpg';
-import carousel8 from 'assets/images/carousel/JPEG_20230326_133241_3200766287346809448.jpg';
-import carousel9 from 'assets/images/carousel/JPEG_20230326_133720_8238953998702825054.jpg';
-import carousel10 from 'assets/images/carousel/JPEG_20230326_133829_8848801794550363302.jpg';
+import PropTypes from 'prop-types';
+import { useState } from 'react';
 
-export default function Landing() {
+// material-ui
+import { useTheme, styled } from '@mui/material/styles';
+import { Avatar, Box, Button, Grid, Typography } from '@mui/material';
+
+// third-party
+import issue1 from 'assets/images/issues/20230326_082038.jpg';
+
+// project imports
+import MainCard from 'ui-component/cards/MainCard';
+import SkeletonTotalOrderCard from 'ui-component/cards/Skeleton/EarningCard';
+
+// assets
+// import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
+// import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+
+const CardWrapper = styled(MainCard)(({ theme }) => ({
+  backgroundColor: theme.palette.primary.dark,
+  color: '#fff',
+  overflow: 'hidden',
+  position: 'relative',
+  '&>div': {
+    position: 'relative',
+    zIndex: 5
+  },
+  '&:after': {
+    content: '""',
+    position: 'absolute',
+    width: 210,
+    height: 210,
+    background: theme.palette.primary[800],
+    borderRadius: '50%',
+    zIndex: 1,
+    top: -85,
+    right: -95,
+    [theme.breakpoints.down('sm')]: {
+      top: -105,
+      right: -140
+    }
+  },
+  '&:before': {
+    content: '""',
+    position: 'absolute',
+    zIndex: 1,
+    width: 210,
+    height: 210,
+    background: theme.palette.primary[800],
+    borderRadius: '50%',
+    top: -125,
+    right: -15,
+    opacity: 0.5,
+    [theme.breakpoints.down('sm')]: {
+      top: -155,
+      right: -70
+    }
+  }
+}));
+
+// ==============================|| DASHBOARD - TOTAL ORDER LINE CHART CARD ||============================== //
+
+const TotalOrderLineChartCard = ({ isLoading,item,i }) => {
+  const theme = useTheme();
+
+  const [timeValue, setTimeValue] = useState(false);
+  const handleChangeTime = (event, newValue) => {
+    setTimeValue(newValue);
+  };
+
   return (
-    <Box sx={{ width: 350, height: 500}}>
-      <ImageList variant="masonry" cols={3} gap={8}>
-       
-          <ImageListItem>
-            <img
-              src={carousel1}
-              srcSet={`${carousel1}?w=200&fit=crop&auto=format&dpr=2 2x`}
-            
-              loading="lazy"
-            />
-          </ImageListItem>
-          <ImageListItem>
-            <img
-              src={carousel2}
-              srcSet={`${carousel2}?w=200&fit=crop&auto=format&dpr=2 2x`}
-            
-              loading="lazy"
-            />
-          </ImageListItem>
-          <ImageListItem>
-            <img
-              src={carousel3}
-              srcSet={`${carousel3}?w=200&fit=crop&auto=format&dpr=2 2x`}
-            
-              loading="lazy"
-            />
-          </ImageListItem>
-          <ImageListItem>
-            <img
-              src={carousel4}
-              srcSet={`${carousel4}?w=200&fit=crop&auto=format&dpr=2 2x`}
-            
-              loading="lazy"
-            />
-          </ImageListItem>
-          <ImageListItem>
-            <img
-              src={carousel5}
-              srcSet={`${carousel5}?w=200&fit=crop&auto=format&dpr=2 2x`}
-            
-              loading="lazy"
-            />
-          </ImageListItem>
-          <ImageListItem>
-            <img
-              src={carousel6}
-              srcSet={`${carousel6}?w=200&fit=crop&auto=format&dpr=2 2x`}
-            
-              loading="lazy"
-            />
-          </ImageListItem>
-          <ImageListItem>
-            <img
-              src={carousel7}
-              srcSet={`${carousel7}?w=200&fit=crop&auto=format&dpr=2 2x`}
-            
-              loading="lazy"
-            />
-          </ImageListItem>
-          <ImageListItem>
-            <img
-              src={carousel8}
-              srcSet={`${carousel8}?w=200&fit=crop&auto=format&dpr=2 2x`}
-            
-              loading="lazy"
-            />
-          </ImageListItem>
-          <ImageListItem>
-            <img
-              src={carousel9}
-              srcSet={`${carousel9}?w=200&fit=crop&auto=format&dpr=2 2x`}
-            
-              loading="lazy"
-            />
-          </ImageListItem>
-          <ImageListItem>
-            <img
-              src={carousel10}
-              srcSet={`${carousel10}?w=200&fit=crop&auto=format&dpr=2 2x`}
-            
-              loading="lazy"
-            />
-          </ImageListItem>
+    <>
+      {isLoading ? (
+        <SkeletonTotalOrderCard />
+      ) : (
+        <CardWrapper border={false} content={false} sx={{backgroundColor:(i%2 == 0 ? theme.palette.primary[800] : theme.palette.secondary[800]), mt:2}}>
+          <Box sx={{ p: 2.25  }}>
+            <Grid container direction="column">
+              <Grid item>
+                <Grid container justifyContent="space-between">
+                  <Grid item>
+                    <Avatar
+                    src={issue1}
+                      variant="rounded"
+                      sx={{
+                        ...theme.typography.commonAvatar,
+                        ...theme.typography.largeAvatar,
+                        backgroundColor: theme.palette.primary[800],
+                        color: '#fff',
+                        mt: 1,
+                        width:250,
+                        height:250
 
-          
-
-      
-      </ImageList>
-    </Box>
+                      }}
+                    >
+                      
+                    </Avatar>
+                  </Grid>
+                  <Grid item>
+                    <Button
+                      disableElevation
+                      variant={timeValue ? 'contained' : 'text'}
+                      size="small"
+                      sx={{ color: 'inherit' , mt:3}}
+                      onClick={(e) => handleChangeTime(e, true)}
+                    >
+                      Update
+                    </Button>
+                    <Button
+                      disableElevation
+                      variant={!timeValue ? 'contained' : 'text'}
+                      size="small"
+                      sx={{ color: (i%2 == 0 ? theme.palette.primary[800] : theme.palette.secondary[800]), mt:3 }}
+                      onClick={(e) => handleChangeTime(e, false)}
+                    >
+                      Approve
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item sx={{ mb: 0.75 }}>
+                <Grid container alignItems="center">
+                  <Grid item xs={6}>
+                    <Grid container alignItems="center">
+                      <Grid item>
+                          <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>{item.lat}</Typography>
+                      </Grid>
+                      <Grid item>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Typography
+                          sx={{
+                            fontSize: '1rem',
+                            fontWeight: 500,
+                            color: theme.palette.primary[200]
+                          }}
+                        >
+                          {item.type}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Box>
+        </CardWrapper>
+      )}
+    </>
   );
-}
+};
 
+TotalOrderLineChartCard.propTypes = {
+  isLoading: PropTypes.bool
+};
+
+export default TotalOrderLineChartCard;
