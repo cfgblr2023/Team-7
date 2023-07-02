@@ -12,6 +12,7 @@ from datetime import datetime
 load_dotenv()
 
 app = Flask(__name__)
+CORS(app)
 
 db = os.getenv("DB")
 dbname = os.getenv("DB_NAME")
@@ -27,7 +28,6 @@ db = client[app.config['MONGO_DBNAME']]
 
 bcrypt = Bcrypt(app)
 
-CORS(app)
 
 @app.route('/register_user', methods=["POST"])
 @cross_origin()
@@ -101,9 +101,9 @@ def upload():
     footpath = db.footpath
     lat = request.get_json()['lat']
     long = request.get_json()['long']
-    approved = request.get_json()['approved']
+    approved = False
     label = request.get_json()['label']
-    image_data = request.files['image'] #BLOB
+    image_data = request.get_json()['image'] #BLOB
     probability = request.get_json()['probability']
     createdAt = datetime.utcnow()
 

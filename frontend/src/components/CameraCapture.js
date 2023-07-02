@@ -10,7 +10,7 @@ const CameraCapture = () => {
   const [LangLong, setLangLong] = useState(null);
 
   const [user, loading, error] = useAuthState(auth);
-  
+
   useEffect(() => {
     // capture();
     setLocation();
@@ -19,10 +19,9 @@ const CameraCapture = () => {
     setUpWebCam();
   }, []);
 
-  async function setUpWebCam(){
+  async function setUpWebCam() {
     await webcam.setup();
     await webcam.play();
-  
   }
   async function capture() {
     const URL = 'https://teachablemachine.withgoogle.com/models/Ccm-Dcw6_/';
@@ -41,7 +40,7 @@ const CameraCapture = () => {
 
     // document.getElementById('webcam-container').removeChild(document.getElementById('webcam-cotainer').lastChild);
     document.getElementById('webcam-container').appendChild(webcam.canvas);
-    
+
     // labelContainer = document.getElementById('label-container');
     // for (let i = 0; i < maxPredictions; i++) {
     //   labelContainer.appendChild(document.createElement('div'));
@@ -77,12 +76,12 @@ const CameraCapture = () => {
   async function predict() {
     let tblob = null;
     const prediction = await model.predict(webcam.canvas);
-   tblob = webcam.canvas.toDataURL('image/png');
-    
+    tblob = webcam.canvas.toDataURL('image/png');
+
     // webcam.canvas.toBlob(function (blob) {
     //   tblob = blob;
     // }, 'image/png')
-    const apiUrl = 'ec2-54-254-193-13.ap-southeast-1.compute.amazonaws.com:5000/upload_image'; // Replace with the API endpoint URL on your server
+    const apiUrl = 'http://localhost:5000/upload_image'; // Replace with the API endpoint URL on your server
 
     let maxP = 0,
       maxLabel = '';
@@ -97,16 +96,14 @@ const CameraCapture = () => {
       await axios.post(
         apiUrl,
         {
-          data: {
-            name: 'user.displayName',
-            email: 'user.email',
-            lat: LangLong.latitude,
-            long: LangLong.longitude,
-            image: tblob,
-            label: maxLabel,
-            probability: maxP
-          }
-        },
+          // name: 'user.displayName',
+          // email: 'user.email',
+          lat: LangLong.latitude,
+          long: LangLong.longitude,
+          image: tblob,
+          label: maxLabel,
+          probability: maxP
+        }
         // {
         //   // headers: {
         //   //   'Content-Type': 'multipart/form-data'
@@ -124,7 +121,7 @@ const CameraCapture = () => {
   return (
     <>
       <div>Teachable Machine Image Model</div>
-      <Button type="button" onClick={capture} >
+      <Button type="button" onClick={capture}>
         Upload Photo
       </Button>
       <div id="webcam-container"></div>
