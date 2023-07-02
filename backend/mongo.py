@@ -98,7 +98,7 @@ def login():
 @app.route('/upload_image', methods=['POST'])
 @cross_origin()
 def upload():
-    treshold = 80
+    treshold = 0.8
     footpath = db.footpath
     lat = request.get_json()['lat']
     long = request.get_json()['long']
